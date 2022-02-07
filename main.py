@@ -1,5 +1,5 @@
-printerAddress_expo = '192.168.0.21'
-printerAddress_kitchen = '192.168.0.20'
+printerAddress_expo = ''
+printerAddress_kitchen = ''
 printerPort = 9100
 from escposprinter import *
 from escposprinter.escpos import EscposIO, Escpos
@@ -52,17 +52,14 @@ def generate_kitchenview(order_in):
             p.writelines(f"Order Comments: {order_in.order_comments}")
             p.writelines('')
             for x in order_in.order_items:
-                z = 0
-                while z < int(x["Item_quantity"]):
-                    z = z+1
-                    p.set(font='b', codepage='cp1251', size='2x', align='left', bold=False,color=2)
-                    p.writelines(x["Item_name"])
-                    for mod in x["Item_mods"]:
-                        p.set(font='a', codepage='cp1251', size='2h', align='left', bold=False,color=2)
-                        p.writelines(f'   Mods: {mod}')
-                    p.set(font='a', codepage='cp1251', size='2h', align='right', bold=True,color=1)
-                    p.writelines(x["Item_comments"])
-                    p.writelines(' ')
+                p.set(font='b', codepage='cp1251', size='2x', align='left', bold=False,color=2)
+                p.writelines(x["Item_name"])
+                for mod in x["Item_mods"]:
+                    p.set(font='a', codepage='cp1251', size='2h', align='left', bold=False,color=2)
+                    p.writelines(f'   Mods: {mod}')
+                p.set(font='a', codepage='cp1251', size='2h', align='right', bold=True,color=1)
+                p.writelines(x["Item_comments"])
+                p.writelines(' ')
 
 def generate_expoview(order_in):                
     if (checkPrinterAlive(printerAddress_expo,printerPort)):
@@ -84,18 +81,14 @@ def generate_expoview(order_in):
             p.writelines(f"Order Total: ${order_in.order_total}")
             p.writelines('')
             for x in order_in.order_items:
-                z = 0
-                
-                while z < int(x["Item_quantity"]):
-                    z = z+1
-                    p.set(font='b', codepage='cp1251', size='2x', align='left', bold=False,color=2)
-                    p.writelines(x["Item_name"])
-                    for mod in x["Item_mods"]:
-                        p.set(font='a', codepage='cp1251', size='2h', align='left', bold=False,color=2)
-                        p.writelines(f'   Mods: {mod}')
-                    p.set(font='a', codepage='cp1251', size='2h', align='right', bold=True,color=1)
-                    p.writelines(x["Item_comments"])
-                    p.writelines(' ')
+                p.set(font='b', codepage='cp1251', size='2x', align='left', bold=False,color=2)
+                p.writelines(x["Item_name"])
+                for mod in x["Item_mods"]:
+                    p.set(font='a', codepage='cp1251', size='2h', align='left', bold=False,color=2)
+                    p.writelines(f'   Mods: {mod}')
+                p.set(font='a', codepage='cp1251', size='2h', align='right', bold=True,color=1)
+                p.writelines(x["Item_comments"])
+                p.writelines(' ')
 def update_order_status(order_id, order_status):
     url = f'{base_url}update_order_status'
     myobj = {'order_id': order_id,'order_status':order_status,'api_key':api_key}
